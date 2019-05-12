@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#222222</color>
+    <color name="colorPrimaryDark">#00574B</color>
+    <!--<color name="colorAccent">#D81B60</color>-->
+    <color name="colorAccent">#00bcd4</color>
+    <color name="navBarBackground">#2B2B2B</color>
+    <color name="mainBackground">#2B2B2B</color>
+    <color name="lightBackground">#2F2F2F</color>
+    <color name="mainTextColor">#B1B1B1</color>
+    <color name="titleColor">#00bcd4</color>
+    <color name="borderColor">#3D3D3D</color>
+    <color name="iconBackground">#B1B1B1</color>
+    <color name="criticalAction">#F25050</color>
+</resources>

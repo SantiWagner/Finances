@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainBackground"
+    android:orientation="vertical"
+    tools:context=".AddItemActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="5dp"
+            android:height="40dp"
+            android:background="@drawable/ic_cancel"
+            android:backgroundTint="@color/iconBackground"
+            android:drawableTint="@color/colorAccent"
+            android:gravity="right"
+            android:onClick="goBack" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/borderColor" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:gravity="start"
+            android:text="Add new item"
+            android:textColor="@color/iconBackground"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="12dp"
+            android:height="40dp"
+            android:background="@drawable/ic_done"
+            android:backgroundTint="@color/titleColor"
+            android:drawableTint="@color/colorAccent"
+            android:gravity="right|end"
+            android:onClick="addNewItem" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/borderColor" />
+
+    <EditText
+        android:id="@+id/itemName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainBackground"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:inputType="textPersonName"
+        android:padding="10dp"
+        android:text="Item name"
+        android:textColor="@color/mainTextColor" />
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/borderColor" />
+
+    <EditText
+        android:id="@+id/itemAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainBackground"
+        android:baselineAligned="false"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:inputType="numberDecimal"
+        android:padding="10dp"
+        android:text="Item amount"
+        android:textColor="@color/mainTextColor" />
+
+    <View
+        android:id="@+id/divider4"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/borderColor" />
+
+    <TextView
+        android:id="@+id/itemCurrency"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainBackground"
+        android:ems="10"
+        android:fontFamily="@font/montserrat"
+        android:inputType="textShortMessage"
+        android:onClick="openCurrenciesDialog"
+        android:padding="10dp"
+        android:text="Currency: USD"
+        android:textColor="@color/mainTextColor"
+        android:textSize="18sp" />
+
+    <View
+        android:id="@+id/divider10"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/borderColor" />
+
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/mainBackground"
+        android:onClick="deleteItem"
+        android:text="DELETE ITEM"
+        android:textColor="@color/criticalAction"
+        android:visibility="invisible" />
+</LinearLayout>

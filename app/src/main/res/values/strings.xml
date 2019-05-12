@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">Finances</string>
+    <string name="title_information">Information</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_portfolio">Portfolio</string>
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_add_item">AddItemActivity</string>
+    <string name="total_net_worth">Total net worth</string>
+    <string name="usd_placeholder">0 USD</string>
+    <string name="ars_placeholder">0 ARS</string>
+    <string name="portfolio_composition">Portfolio composition</string>
+    <string name="historical_net_worth">Historical net worth</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="currencies">Currencies</string>
+    <string name="item_name_placeholder">Payoneer Account</string>
+    <string name="valuation_placeholder">Valuation: 0 XXX</string>
+    <string name="last_updated_placeholder">Last updated: dd/mm/yyyy</string>
+    <string name="information_panel">Information panel</string>
+    <string name="key">Key</string>
+    <string name="value">Value</string>
+
+    <string-array name="currencies">
+        <item>USD</item>
+        <item>ARS</item>
+    </string-array>
+</resources>

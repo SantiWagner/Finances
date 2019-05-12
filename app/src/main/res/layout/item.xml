@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/lightBackground"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp"
+        android:layout_weight="1">
+
+        <TextView
+            android:id="@+id/item_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:text="@string/item_name_placeholder"
+            android:textColor="@color/mainTextColor"
+            android:textSize="16sp"
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/editButton"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="12dp"
+            android:height="40dp"
+            android:background="@drawable/ic_edit"
+            android:backgroundTint="@color/titleColor"
+            android:drawableTint="@color/colorAccent"
+            android:gravity="right"
+            android:onClick="editItemCallback" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/item_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/montserrat"
+        android:text="@string/valuation_placeholder"
+        android:textColor="@color/mainTextColor" />
+
+    <TextView
+        android:id="@+id/last_updated"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="5dp"
+        android:layout_marginBottom="5dp"
+        android:layout_weight="1"
+        android:fontFamily="@font/montserrat"
+        android:gravity="end"
+        android:text="@string/last_updated_placeholder"
+        android:textColor="@color/mainTextColor"
+        android:textSize="12sp"
+        android:textStyle="italic" />
+
+    <View
+        android:id="@+id/divider2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="1"
+        android:background="@color/borderColor" />
+
+</LinearLayout>
