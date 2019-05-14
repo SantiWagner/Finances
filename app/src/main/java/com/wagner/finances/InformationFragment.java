@@ -1,6 +1,8 @@
 package com.wagner.finances;
 
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -30,7 +32,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class InformationFragment extends Fragment {
+public class InformationFragment extends Fragment implements  Constants {
 
     CurrencyAdapter currencyListAdapter;
     IndicatorAdapter indicatorListAdapter;
@@ -45,7 +47,8 @@ public class InformationFragment extends Fragment {
     View rootView;
 
 
-    private static DecimalFormat df = new DecimalFormat("#.###");
+    private static DecimalFormat df_3 = new DecimalFormat("#.###");
+    private static DecimalFormat df_2 = new DecimalFormat("#.##");
 
     public InformationFragment() {
         // Required empty public constructor
@@ -63,15 +66,14 @@ public class InformationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         currencyListAdapter = new CurrencyAdapter(getActivity(), currencies);
         indicatorListAdapter = new IndicatorAdapter(getActivity(), indicators);
-        getCurrencies();
-        getPerformance();
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        rootView=inflater.inflate(R.layout.fragment_information, container, false);
+        rootView = inflater.inflate(R.layout.fragment_information, container, false);
 
         currenciesRecyclerView = (RecyclerView) rootView.findViewById(R.id.currency_list);
         indicatorsRecyclerView = (RecyclerView) rootView.findViewById(R.id.indicators_list);
@@ -86,18 +88,19 @@ public class InformationFragment extends Fragment {
         indicatorsRecyclerView.setAdapter(indicatorListAdapter);
 
         Button button = (Button) rootView.findViewById(R.id.refreshButton);
-        button.setOnClickListener(new View.OnClickListener()
-        {
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
-                IndicatorAdapter.current_row=0;
-                CurrencyAdapter.current_row=0;
+            public void onClick(View v) {
+                //Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                //startActivity(intent);
+
                 getCurrencies();
-                getPerformance();
+                getIndicators();
             }
         });
 
+        getCurrencies();
+        getIndicators();
         return rootView;
     }
 
@@ -122,11 +125,11 @@ public class InformationFragment extends Fragment {
                                 double value = Double.parseDouble(items[i].split(":")[1]);
 
                                 if(symbol.equals("ARS")){
-                                    currencies.add(new Currency("USD",df.format(value)+" ARS"));
+                                    currencies.add(new Currency("USD",df_3.format(value)+" ARS"));
                                     usd_to_ars=value;
                                 }else{
 
-                                    currencies.add(new Currency(symbol,df.format(usd_to_ars/value)+" ARS"));
+                                    currencies.add(new Currency(symbol,df_3.format(usd_to_ars/value)+" ARS"));
                                 }
 
                             }
@@ -158,45 +161,33 @@ public class InformationFragment extends Fragment {
     }
 
 
-    public void getPerformance(){
-        String url="https://www.alphavantage.co/query?function=SECTOR&apikey=HANRA6QVP1HOFPYH";
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
-                url, null,
-                new Response.Listener() {
-                    @Override
-                    public void onResponse(Object response) {
-                        Log.e("Response: ",response.toString());
-                        JSONObject json_response=(JSONObject)response;
+    public void getIndicators(){
+        SharedPreferences preferences = getActivity().getSharedPreferences(INDICATORS_FILE, 0);
+        float cost_of_living = preferences.getFloat("COST_OF_LIVING",-1);
+        float goal = preferences.getFloat("GOAL",-1);
 
-                        try {
-                            JSONObject elements = json_response.getJSONObject("Rank D: 1 Month Performance");
-                            indicators.clear();
-                            Iterator<String> keys = elements.keys();
+        double total = MainActivity.db.itemDao().getTotal();
 
-                            while(keys.hasNext()) {
-                                String key = keys.next();
-                                indicators.add(new Indicator(key,elements.getString(key)));
-                            }
+        if(cost_of_living == -1){
+            indicators.add(new Indicator("Cost of Living", "not set"));
+            indicators.add(new Indicator("Total over CoL", "-"));
+        }else{
+            indicators.add(new Indicator("Cost of Living", df_2.format(cost_of_living)+" USD"));
+            indicators.add(new Indicator("Total over CoL", df_2.format(total/cost_of_living)));
+        }
 
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        } finally {
-                            indicatorListAdapter.notifyDataSetChanged();
-                            rootView.findViewById(R.id.loading_indicators).setVisibility(View.GONE);
-                            rootView.findViewById(R.id.indicators_source).setVisibility(View.VISIBLE);
-                        }
-                    }
+        if(goal == -1){
+            indicators.add(new Indicator("Goal", "not set"));
+            indicators.add(new Indicator("% Goal", "-"));
+            indicators.add(new Indicator("Remaining", "-"));
+        }else{
+            indicators.add(new Indicator("Goal", df_2.format(goal)+" USD"));
+            indicators.add(new Indicator("% Goal", df_2.format(100*total/goal)+"%"));
+            indicators.add(new Indicator("Remaining", df_2.format(goal-total)+" USD"));
+        }
 
-                },
-                new Response.ErrorListener() {
-                    @Override
-                    public void onErrorResponse(VolleyError error) {
-                        Toast.makeText(getActivity(), "Failed to retrieve information...",
-                                Toast.LENGTH_LONG).show();
+        rootView.findViewById(R.id.loading_indicators).setVisibility(View.GONE);
 
-                    }
-                });
-        App.getInstance().addToRequestQueue(jsonObjReq, "getPerformance");
     }
 
 }

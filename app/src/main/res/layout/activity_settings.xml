@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/mainBackground"
+    android:orientation="vertical"
+    tools:context=".AddItemActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="10dp">
+
+        <Button
+            android:id="@+id/backButton"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="right"
+            android:layout_marginTop="0dp"
+            android:layout_marginEnd="5dp"
+            android:height="40dp"
+            android:background="@drawable/ic_back"
+            android:backgroundTint="@color/iconBackground"
+            android:drawableTint="@color/colorAccent"
+            android:gravity="right"
+            android:onClick="goBack" />
+
+        <View
+            android:id="@+id/divider7"
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/borderColor" />
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:layout_marginTop="2dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:gravity="start"
+            android:text="Settings"
+            android:textColor="@color/iconBackground"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider3"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/borderColor" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Cost of Living (monthly value)"
+        android:textAlignment="center"
+        android:textColor="@color/iconBackground"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider10"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/borderColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/colValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/mainBackground"
+            android:baselineAligned="false"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:text="Cost of Living value"
+            android:textColor="@color/mainTextColor" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <View
+                android:id="@+id/divider11"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/borderColor" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/colCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/mainBackground"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:inputType="textShortMessage"
+            android:onClick="openCurrenciesDialog"
+            android:paddingTop="10dp"
+            android:text="Currency: USD"
+            android:textAlignment="center"
+            android:textColor="@color/mainTextColor"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider12"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/borderColor" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/montserrat"
+        android:text="Next Goal"
+        android:textAlignment="center"
+        android:textColor="@color/iconBackground"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <View
+        android:id="@+id/divider13"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="5dp"
+        android:background="@color/borderColor" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:id="@+id/goalValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/mainBackground"
+            android:baselineAligned="false"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:inputType="numberDecimal"
+            android:padding="10dp"
+            android:text="Goal value"
+            android:textColor="@color/mainTextColor" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp">
+
+            <View
+                android:id="@+id/divider11"
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="@color/borderColor" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/goalCurrency"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:background="@color/mainBackground"
+            android:ems="10"
+            android:fontFamily="@font/montserrat"
+            android:inputType="textShortMessage"
+            android:onClick="openCurrenciesDialog"
+            android:paddingTop="10dp"
+            android:text="Currency: USD"
+            android:textAlignment="center"
+            android:textColor="@color/mainTextColor"
+            android:textSize="18sp" />
+    </LinearLayout>
+
+    <View
+        android:id="@+id/divider12"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/borderColor" />
+
+</LinearLayout>

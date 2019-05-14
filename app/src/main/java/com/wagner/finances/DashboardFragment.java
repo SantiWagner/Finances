@@ -1,12 +1,14 @@
 package com.wagner.finances;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -21,7 +23,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class DashboardFragment extends Fragment {
+public class DashboardFragment extends Fragment implements  Constants {
 
     DecimalFormat df;
 
@@ -51,6 +53,19 @@ public class DashboardFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
         updateTotal(rootView);
+
+        Button button = (Button) rootView.findViewById(R.id.settingsButton);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SettingsActivity.class);
+                startActivity(intent);
+
+                //getCurrencies();
+                //getIndicators();
+            }
+        });
+
 
         return rootView;
     }
@@ -91,6 +106,7 @@ public class DashboardFragment extends Fragment {
         PieChart composition = (PieChart) rootView.findViewById(R.id.composition);
 
         double total_d = MainActivity.db.itemDao().getTotal();
+
 
         List<PieEntry> pieChartEntries = new ArrayList<>();
 
