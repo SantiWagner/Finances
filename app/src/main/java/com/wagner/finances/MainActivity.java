@@ -76,7 +76,6 @@ public class MainActivity extends AppCompatActivity implements DashboardFragment
 
     }
 
-
     public void addItemCallback(View v){
         Intent intent = new Intent(this, AddItemActivity.class);
         intent.putExtra("editing",false);

@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.PieChart;
@@ -26,6 +27,11 @@ import java.util.List;
 public class DashboardFragment extends Fragment implements  Constants {
 
     DecimalFormat df;
+
+    String mainCurrency = "USD";
+    String secondaryCurrency = "ARS";
+
+    View rootView;
 
     private OnFragmentInteractionListener mListener;
 
@@ -50,9 +56,9 @@ public class DashboardFragment extends Fragment implements  Constants {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
+        rootView = inflater.inflate(R.layout.fragment_dashboard, container, false);
 
-        updateTotal(rootView);
+        updateTotal(rootView, "USD","ARS");
 
         Button button = (Button) rootView.findViewById(R.id.settingsButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -66,8 +72,33 @@ public class DashboardFragment extends Fragment implements  Constants {
             }
         });
 
+        LinearLayout mainPanelLayout  = (LinearLayout) rootView.findViewById(R.id.mainPanelLayout);
+
+        mainPanelLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                switchCurrencies();
+            }
+        });
+
 
         return rootView;
+    }
+
+    public void switchCurrencies(){
+        if(mainCurrency == "USD")
+        {
+            mainCurrency = "ARS";
+            secondaryCurrency = "USD";
+
+        }else{
+            mainCurrency = "USD";
+            secondaryCurrency = "ARS";
+        }
+
+        updateTotal(rootView, mainCurrency, secondaryCurrency);
     }
 
     public void onButtonPressed(Uri uri) {
@@ -100,18 +131,25 @@ public class DashboardFragment extends Fragment implements  Constants {
         void onFragmentInteraction(Uri uri);
     }
 
-    public void updateTotal(View rootView){
-        TextView total = (TextView) rootView.findViewById(R.id.total_textview);
+
+    public void updateTotal(View rootView, String main, String secondary){
+
+        TextView total_main_tv = (TextView) rootView.findViewById(R.id.total_textview);
+        TextView total_secondary_tv = (TextView) rootView.findViewById(R.id.textView3);
+        TextView portfolioCompositionTitle = (TextView) rootView.findViewById(R.id.portfolioCompositionTitle);
 
         PieChart composition = (PieChart) rootView.findViewById(R.id.composition);
 
-        double total_d = MainActivity.db.itemDao().getTotal();
+        double total_main = MainActivity.db.itemDao().getTotalByCurrency(main);
+
+        double total_secondary = MainActivity.db.itemDao().getTotalByCurrency(secondary);
 
 
         List<PieEntry> pieChartEntries = new ArrayList<>();
 
-        for(Item i:MainActivity.db.itemDao().getItems()) {
-            pieChartEntries.add(new PieEntry((float)(i.amount/total_d)*100,i.name));
+
+        for(Item i:MainActivity.db.itemDao().getItemsByCurrency(main)) {
+            pieChartEntries.add(new PieEntry((float)(i.amount/total_main)*100,i.name));
         }
 
         PieDataSet set = new PieDataSet(pieChartEntries, "");
@@ -128,7 +166,9 @@ public class DashboardFragment extends Fragment implements  Constants {
         composition.getLegend().setWordWrapEnabled(true);
         composition.getLegend().setHorizontalAlignment(Legend.LegendHorizontalAlignment.CENTER);
         composition.getDescription().setText("");
-        total.setText(df.format(total_d)+ " USD");
-
+        composition.invalidate();
+        total_main_tv.setText(df.format(total_main)+ " "+main);
+        total_secondary_tv.setText(df.format(total_secondary)+ " "+secondary);
+        portfolioCompositionTitle.setText("Portfolio composition ("+main+")");
     }
 }

@@ -166,7 +166,7 @@ public class InformationFragment extends Fragment implements  Constants {
         float cost_of_living = preferences.getFloat("COST_OF_LIVING",-1);
         float goal = preferences.getFloat("GOAL",-1);
 
-        double total = MainActivity.db.itemDao().getTotal();
+        double total = MainActivity.db.itemDao().getTotalByCurrency("USD");
 
         if(cost_of_living == -1){
             indicators.add(new Indicator("Cost of Living", "not set"));

@@ -17,8 +17,11 @@ public interface ItemDAO {
     @Query("SELECT * FROM items")
     List<Item> getItems();
 
-    @Query("SELECT SUM(amount) FROM items")
-    double getTotal();
+    @Query("SELECT * FROM items WHERE currency= :c")
+    List<Item> getItemsByCurrency(String c);
+
+    @Query("SELECT SUM(amount) FROM items WHERE currency= :c")
+    double getTotalByCurrency(String c);
 
     @Query("SELECT * FROM items WHERE id=:id")
     Item getItem(int id);

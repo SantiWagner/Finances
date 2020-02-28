@@ -50,7 +50,7 @@ public class AddItemActivity extends AppCompatActivity {
 
             MainActivity.db.itemDao().updateItem(item);
         }else {
-            MainActivity.db.itemDao().insertItem(new Item(name.getText().toString(), Double.parseDouble(amount.getText().toString()), System.currentTimeMillis(),currency.getText().toString().split(":")[1].substring(1)));
+            MainActivity.db.itemDao().insertItem(new Item(name.getText().toString(), Double.parseDouble(amount.getText().toString()), System.currentTimeMillis(),currency.getText().toString().split(":")[1].substring(1).trim()));
         }
 
         goBack(null);

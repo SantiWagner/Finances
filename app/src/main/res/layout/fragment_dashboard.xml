@@ -59,6 +59,7 @@
         android:background="@color/borderColor" />
 
     <LinearLayout
+        android:id="@+id/mainPanelLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
@@ -157,6 +158,7 @@
                 android:tint="@color/lightBackground" />
 
             <TextView
+                android:id="@+id/portfolioCompositionTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="5dp"
@@ -192,7 +194,8 @@
         android:layout_marginTop="30dp"
         android:layout_marginBottom="100dp"
         android:background="@color/lightBackground"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        tools:visibility="gone">
 
         <View
             android:id="@+id/view2"
