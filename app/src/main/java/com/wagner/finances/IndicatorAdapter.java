@@ -18,7 +18,7 @@ public class IndicatorAdapter extends RecyclerView.Adapter<IndicatorAdapter.View
     private LayoutInflater inflater;
     List<Indicator> data= Collections.emptyList();
 
-    public static int current_row=0;
+    public boolean paintBackground = true;
 
     public IndicatorAdapter(Context context, List<Indicator> data){
         this.context=context;
@@ -42,9 +42,11 @@ public class IndicatorAdapter extends RecyclerView.Adapter<IndicatorAdapter.View
         Indicator current=data.get(position);
         myHolder.key.setText(current.key);
         myHolder.value.setText(current.value);
-        if(current_row%2==0)
+        if(paintBackground)
             myHolder.background.setBackgroundColor(context.getResources().getColor(R.color.lightBackground));
-        current_row++;
+        else
+            myHolder.background.setBackgroundColor(context.getResources().getColor(R.color.mainBackground));
+        paintBackground = !paintBackground;
     }
 
     @Override

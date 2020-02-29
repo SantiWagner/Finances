@@ -14,10 +14,10 @@ import java.util.List;
 @Dao
 public interface ItemDAO {
 
-    @Query("SELECT * FROM items")
+    @Query("SELECT * FROM items ORDER BY name DESC")
     List<Item> getItems();
 
-    @Query("SELECT * FROM items WHERE currency= :c")
+    @Query("SELECT * FROM items WHERE currency= :c ORDER BY amount DESC")
     List<Item> getItemsByCurrency(String c);
 
     @Query("SELECT SUM(amount) FROM items WHERE currency= :c")

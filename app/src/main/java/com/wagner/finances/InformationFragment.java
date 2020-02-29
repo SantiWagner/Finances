@@ -12,6 +12,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -34,15 +36,21 @@ import java.util.Map;
 
 public class InformationFragment extends Fragment implements  Constants {
 
-    CurrencyAdapter currencyListAdapter;
+    String mainCurrency = "USD";
+    String secondaryCurrency = "ARS";
+
+    IndicatorAdapter currencyListAdapter;
     IndicatorAdapter indicatorListAdapter;
 
-    List<Currency> currencies = new ArrayList<>();
+
+    List<Indicator> currencies = new ArrayList<>();
     List<Indicator> indicators = new ArrayList<>();
+
 
     RecyclerView currenciesRecyclerView;
 
     RecyclerView indicatorsRecyclerView;
+
 
     View rootView;
 
@@ -64,9 +72,8 @@ public class InformationFragment extends Fragment implements  Constants {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        currencyListAdapter = new CurrencyAdapter(getActivity(), currencies);
+        currencyListAdapter = new IndicatorAdapter(getActivity(), currencies);
         indicatorListAdapter = new IndicatorAdapter(getActivity(), indicators);
-
     }
 
     @Override
@@ -78,14 +85,17 @@ public class InformationFragment extends Fragment implements  Constants {
         currenciesRecyclerView = (RecyclerView) rootView.findViewById(R.id.currency_list);
         indicatorsRecyclerView = (RecyclerView) rootView.findViewById(R.id.indicators_list);
 
+
         final GridLayoutManager currenciesLayoutManager = new GridLayoutManager(getActivity(), 1);
         final GridLayoutManager indicatorsLayoutManager = new GridLayoutManager(getActivity(), 1);
+
 
         currenciesRecyclerView.setLayoutManager(currenciesLayoutManager);
         indicatorsRecyclerView.setLayoutManager(indicatorsLayoutManager);
 
         currenciesRecyclerView.setAdapter(currencyListAdapter);
         indicatorsRecyclerView.setAdapter(indicatorListAdapter);
+
 
         Button button = (Button) rootView.findViewById(R.id.refreshButton);
         button.setOnClickListener(new View.OnClickListener() {
@@ -95,13 +105,41 @@ public class InformationFragment extends Fragment implements  Constants {
                 //startActivity(intent);
 
                 getCurrencies();
-                getIndicators();
+                getIndicators(mainCurrency);
+            }
+        });
+
+
+        LinearLayout selectPortfolioLayout  = (LinearLayout) rootView.findViewById(R.id.selectPortfolio);
+
+        selectPortfolioLayout.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                switchCurrencies();
             }
         });
 
         getCurrencies();
-        getIndicators();
+        getIndicators(mainCurrency);
         return rootView;
+    }
+
+    public void switchCurrencies(){
+        if(mainCurrency == "USD")
+        {
+            mainCurrency = "ARS";
+            secondaryCurrency = "USD";
+
+        }else{
+            mainCurrency = "USD";
+            secondaryCurrency = "ARS";
+        }
+
+        TextView selected = (TextView) rootView.findViewById(R.id.selected_portfolio);
+        selected.setText("Portfolio: "+mainCurrency);
+        getIndicators(mainCurrency);
     }
 
     public void getCurrencies(){
@@ -125,11 +163,11 @@ public class InformationFragment extends Fragment implements  Constants {
                                 double value = Double.parseDouble(items[i].split(":")[1]);
 
                                 if(symbol.equals("ARS")){
-                                    currencies.add(new Currency("USD",df_3.format(value)+" ARS"));
+                                    currencies.add(new Indicator("USD",df_3.format(value)+" ARS"));
                                     usd_to_ars=value;
                                 }else{
 
-                                    currencies.add(new Currency(symbol,df_3.format(usd_to_ars/value)+" ARS"));
+                                    currencies.add(new Indicator(symbol,df_3.format(usd_to_ars/value)+" ARS"));
                                 }
 
                             }
@@ -161,18 +199,20 @@ public class InformationFragment extends Fragment implements  Constants {
     }
 
 
-    public void getIndicators(){
+    public void getIndicators(String currency){
         SharedPreferences preferences = getActivity().getSharedPreferences(INDICATORS_FILE, 0);
-        float cost_of_living = preferences.getFloat("COST_OF_LIVING",-1);
-        float goal = preferences.getFloat("GOAL",-1);
+        float cost_of_living = preferences.getFloat("COST_OF_LIVING_"+currency,-1);
+        float goal = preferences.getFloat("GOAL_"+currency,-1);
 
-        double total = MainActivity.db.itemDao().getTotalByCurrency("USD");
+        double total = MainActivity.db.itemDao().getTotalByCurrency(currency);
 
+        indicators.clear();
+        indicators.add(new Indicator("Total",df_2.format(total)+" "+currency));
         if(cost_of_living == -1){
             indicators.add(new Indicator("Cost of Living", "not set"));
             indicators.add(new Indicator("Total over CoL", "-"));
         }else{
-            indicators.add(new Indicator("Cost of Living", df_2.format(cost_of_living)+" USD"));
+            indicators.add(new Indicator("Cost of Living", df_2.format(cost_of_living)+" "+currency));
             indicators.add(new Indicator("Total over CoL", df_2.format(total/cost_of_living)));
         }
 
@@ -181,13 +221,14 @@ public class InformationFragment extends Fragment implements  Constants {
             indicators.add(new Indicator("% Goal", "-"));
             indicators.add(new Indicator("Remaining", "-"));
         }else{
-            indicators.add(new Indicator("Goal", df_2.format(goal)+" USD"));
+            indicators.add(new Indicator("Goal", df_2.format(goal)+" "+currency));
             indicators.add(new Indicator("% Goal", df_2.format(100*total/goal)+"%"));
-            indicators.add(new Indicator("Remaining", df_2.format(goal-total)+" USD"));
+            indicators.add(new Indicator("Remaining", df_2.format(Math.max(0,goal-total))+" "+currency));
         }
 
         rootView.findViewById(R.id.loading_indicators).setVisibility(View.GONE);
 
+        indicatorListAdapter.notifyDataSetChanged();
     }
 
 }

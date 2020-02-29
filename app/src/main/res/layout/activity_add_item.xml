@@ -24,10 +24,11 @@
             android:layout_marginEnd="5dp"
             android:height="40dp"
             android:background="@drawable/ic_cancel"
-            android:backgroundTint="@color/iconBackground"
+            android:backgroundTint="@color/mainTextColor"
             android:drawableTint="@color/colorAccent"
             android:gravity="right"
-            android:onClick="goBack" />
+            android:onClick="goBack"
+            android:textColor="@color/mainTextColor" />
 
         <View
             android:id="@+id/divider7"
@@ -45,7 +46,7 @@
             android:fontFamily="@font/montserrat"
             android:gravity="start"
             android:text="Add new item"
-            android:textColor="@color/iconBackground"
+            android:textColor="@color/mainTextColor"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -79,10 +80,11 @@
         android:background="@color/mainBackground"
         android:ems="10"
         android:fontFamily="@font/montserrat"
+        android:hint="Item name"
         android:inputType="textPersonName"
         android:padding="10dp"
-        android:text="Item name"
-        android:textColor="@color/mainTextColor" />
+        android:textColor="@color/mainTextColor"
+        android:textColorHint="@color/secondaryTextColor" />
 
     <View
         android:id="@+id/divider"
@@ -98,10 +100,11 @@
         android:baselineAligned="false"
         android:ems="10"
         android:fontFamily="@font/montserrat"
+        android:hint="Item amount"
         android:inputType="numberDecimal"
         android:padding="10dp"
-        android:text="Item amount"
-        android:textColor="@color/mainTextColor" />
+        android:textColor="@color/mainTextColor"
+        android:textColorHint="@color/secondaryTextColor" />
 
     <View
         android:id="@+id/divider4"
@@ -134,8 +137,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/mainBackground"
+        android:fontFamily="sans-serif-black"
         android:onClick="deleteItem"
         android:text="DELETE ITEM"
-        android:textColor="@color/criticalAction"
-        android:visibility="invisible" />
+        android:textColor="@color/deleteActionV2"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        android:visibility="visible" />
 </LinearLayout>

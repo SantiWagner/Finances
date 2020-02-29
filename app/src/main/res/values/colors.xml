@@ -7,9 +7,13 @@
     <color name="navBarBackground">#2B2B2B</color>
     <color name="mainBackground">#2B2B2B</color>
     <color name="lightBackground">#2F2F2F</color>
-    <color name="mainTextColor">#B1B1B1</color>
+    <color name="mainTextColor">#CCCACA</color>
     <color name="titleColor">#00bcd4</color>
     <color name="borderColor">#3D3D3D</color>
-    <color name="iconBackground">#B1B1B1</color>
+    <color name="iconBackground">#A3A1A1</color>
     <color name="criticalAction">#F25050</color>
+    <color name="deleteColour" />
+    <color name="deleteAction">#FF5722</color>
+    <color name="deleteActionV2">#E4453A</color>
+    <color name="secondaryTextColor">#B3B1B1</color>
 </resources>

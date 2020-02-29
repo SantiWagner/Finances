@@ -30,7 +30,7 @@
             android:fontFamily="@font/montserrat"
             android:gravity="start"
             android:text="@string/information_panel"
-            android:textColor="@color/iconBackground"
+            android:textColor="@color/mainTextColor"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -59,9 +59,132 @@
 
 
     <LinearLayout
+        android:id="@+id/selectPortfolio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/divider16"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/borderColor" />
+
+        <TextView
+            android:id="@+id/selected_portfolio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:text="Portfolio: USD"
+            android:textAlignment="center"
+            android:textColor="@color/mainTextColor"
+            android:textSize="24sp" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:text="click to switch"
+            android:textAlignment="center"
+            android:textColor="@color/secondaryTextColor"
+            android:textSize="11sp" />
+
+        <View
+            android:id="@+id/divider17"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/borderColor" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/lightBackground"
+        android:orientation="vertical">
+
+        <View
+            android:id="@+id/view2"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/borderColor" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/lightBackground"
+                android:backgroundTint="@color/borderColor"
+                android:src="@drawable/ic_indicators"
+                android:tint="@color/lightBackground" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:layout_marginEnd="25dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/montserrat"
+                android:text="Indicators"
+                android:textAlignment="center"
+                android:textColor="@color/mainTextColor"
+                android:textSize="18sp" />
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/loading_indicators"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:indeterminate="true"
+            android:indeterminateTint="@color/borderColor" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/indicators_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        </android.support.v7.widget.RecyclerView>
+
+        <TextView
+            android:id="@+id/indicators_source"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginBottom="5dp"
+            android:layout_weight="1"
+            android:fontFamily="@font/montserrat"
+            android:gravity="end"
+            android:text="source: alpha vantage  "
+            android:textColor="@color/mainTextColor"
+            android:textSize="12sp"
+            android:textStyle="italic"
+            android:visibility="gone" />
+
+        <View
+            android:id="@+id/view3"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_weight="1"
+            android:background="@color/borderColor" />
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
+        android:layout_marginBottom="60dp"
         android:background="@color/lightBackground"
         android:orientation="vertical">
 
@@ -108,11 +231,9 @@
 
 
         <android.support.v7.widget.RecyclerView
-         android:id="@+id/currency_list"
-         android:layout_width="match_parent"
-         android:layout_height="wrap_content">
-
-
+            android:id="@+id/currency_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
 
         </android.support.v7.widget.RecyclerView>
@@ -132,6 +253,7 @@
             android:textSize="12sp"
             android:textStyle="italic"
             android:visibility="gone" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -139,86 +261,4 @@
             android:background="@color/borderColor" />
     </LinearLayout>
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="100dp"
-        android:background="@color/lightBackground"
-        android:orientation="vertical">
-
-        <View
-            android:id="@+id/view2"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/borderColor" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal">
-
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/lightBackground"
-                android:backgroundTint="@color/borderColor"
-                android:src="@drawable/ic_indicators"
-                android:tint="@color/lightBackground" />
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginEnd="25dp"
-                android:layout_weight="1"
-                android:fontFamily="@font/montserrat"
-                android:text="Indicators"
-                android:textAlignment="center"
-                android:textColor="@color/mainTextColor"
-                android:textSize="18sp" />
-        </LinearLayout>
-
-        <ProgressBar
-            android:id="@+id/loading_indicators"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:indeterminate="true"
-            android:indeterminateTint="@color/borderColor" />
-
-
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/indicators_list"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-        </android.support.v7.widget.RecyclerView>
-
-        <TextView
-            android:id="@+id/indicators_source"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginEnd="10dp"
-            android:layout_marginBottom="5dp"
-            android:layout_weight="1"
-            android:fontFamily="@font/montserrat"
-            android:gravity="end"
-            android:text="source: alpha vantage  "
-            android:textColor="@color/mainTextColor"
-            android:textSize="12sp"
-            android:textStyle="italic"
-            android:visibility="gone" />
-
-        <View
-            android:id="@+id/view3"
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:layout_weight="1"
-            android:background="@color/borderColor" />
-    </LinearLayout>
 </LinearLayout>

@@ -30,7 +30,7 @@
             android:fontFamily="@font/montserrat"
             android:gravity="start"
             android:text="@string/portfolio_composition"
-            android:textColor="@color/iconBackground"
+            android:textColor="@color/mainTextColor"
             android:textSize="18sp"
             android:textStyle="bold" />
 

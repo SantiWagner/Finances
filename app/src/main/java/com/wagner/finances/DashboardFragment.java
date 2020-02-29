@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,6 +27,13 @@ import java.util.List;
 
 
 public class DashboardFragment extends Fragment implements  Constants {
+
+    IndicatorAdapter indicatorListAdapter;
+
+    List<Indicator> indicators = new ArrayList<>();
+
+
+    RecyclerView indicatorsRecyclerView;
 
     DecimalFormat df;
 
@@ -50,6 +59,7 @@ public class DashboardFragment extends Fragment implements  Constants {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        indicatorListAdapter = new IndicatorAdapter(getActivity(), indicators);
     }
 
     @Override
@@ -84,7 +94,31 @@ public class DashboardFragment extends Fragment implements  Constants {
         });
 
 
+        indicatorsRecyclerView = (RecyclerView) rootView.findViewById(R.id.portfolio_list);
+
+        final GridLayoutManager indicatorsLayoutManager = new GridLayoutManager(getActivity(), 1);
+
+
+        indicatorsRecyclerView.setLayoutManager(indicatorsLayoutManager);
+
+
+        indicatorsRecyclerView.setAdapter(indicatorListAdapter);
+
+
+        buildTable();
+
+
         return rootView;
+    }
+
+    public void buildTable(){
+        indicators.clear();
+        double total = MainActivity.db.itemDao().getTotalByCurrency(mainCurrency);
+
+        for(Item i:MainActivity.db.itemDao().getItemsByCurrency(mainCurrency)) {
+            indicators.add(new Indicator(i.name, (df.format((i.amount/total)*100)+"%")));
+        }
+        indicatorListAdapter.notifyDataSetChanged();
     }
 
     public void switchCurrencies(){
@@ -99,6 +133,7 @@ public class DashboardFragment extends Fragment implements  Constants {
         }
 
         updateTotal(rootView, mainCurrency, secondaryCurrency);
+        buildTable();
     }
 
     public void onButtonPressed(Uri uri) {
