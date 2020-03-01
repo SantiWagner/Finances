@@ -3,7 +3,9 @@ package com.wagner.finances;
 import android.arch.persistence.room.Dao;
 import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.Query;
+import android.arch.persistence.room.TypeConverters;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -14,7 +16,10 @@ import java.util.List;
 public interface HistoricalItemDAO {
 
     @Query("SELECT * FROM historical_data")
-    List<HistoricalItem> getHistoricalData();
+    List<HistoricalItem> getAll();
+
+    @Query("SELECT * FROM historical_data WHERE date = :d")
+    List<HistoricalItem> getAllByDate(Date d);
 
     @Insert
     void insertHistoricalItem(HistoricalItem item);

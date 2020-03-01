@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -204,6 +205,6 @@ public class DashboardFragment extends Fragment implements  Constants {
         composition.invalidate();
         total_main_tv.setText(df.format(total_main)+ " "+main);
         total_secondary_tv.setText(df.format(total_secondary)+ " "+secondary);
-        portfolioCompositionTitle.setText("Portfolio composition ("+main+")");
+        portfolioCompositionTitle.setText(Html.fromHtml("Portfolio composition <strong>(<font color='#00bcd4'>"+main+"</font>)</strong>"));
     }
 }

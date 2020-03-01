@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +36,10 @@ import java.util.Map;
 
 
 public class InformationFragment extends Fragment implements  Constants {
+
+
+    //Stored in USD as base
+    HashMap<String,Double> convertionRates = new HashMap<>();
 
     String mainCurrency = "USD";
     String secondaryCurrency = "ARS";
@@ -104,7 +109,7 @@ public class InformationFragment extends Fragment implements  Constants {
                 //Intent intent = new Intent(getActivity(), SettingsActivity.class);
                 //startActivity(intent);
 
-                getCurrencies();
+                getCurrencies(mainCurrency);
                 getIndicators(mainCurrency);
             }
         });
@@ -121,7 +126,11 @@ public class InformationFragment extends Fragment implements  Constants {
             }
         });
 
-        getCurrencies();
+        TextView selected = (TextView) rootView.findViewById(R.id.selected_portfolio);
+
+        selected.setText(Html.fromHtml("Portfolio: <strong><font color='#00bcd4'>"+mainCurrency+"</font></strong>"));
+
+        getCurrencies(mainCurrency);
         getIndicators(mainCurrency);
         return rootView;
     }
@@ -138,11 +147,15 @@ public class InformationFragment extends Fragment implements  Constants {
         }
 
         TextView selected = (TextView) rootView.findViewById(R.id.selected_portfolio);
-        selected.setText("Portfolio: "+mainCurrency);
+
+        selected.setText(Html.fromHtml("Portfolio: <strong><font color='#00bcd4'>"+mainCurrency+"</font></strong>"));
+        //selected.setText("Portfolio: "+mainCurrency);
         getIndicators(mainCurrency);
+
+        buildTable(mainCurrency);
     }
 
-    public void getCurrencies(){
+    public void getCurrencies(final String base){
         String url="http://www.apilayer.net/api/live?access_key=462491ec3c04889a45aec0eef196af70&source=USD&currencies=ARS,BRL,UYU,GBP,EUR";
         JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.GET,
                 url, null,
@@ -158,28 +171,21 @@ public class InformationFragment extends Fragment implements  Constants {
                             currencies.clear();
                             for (int i = 0; i < items.length; i++) {
 
-                                String symbol = items[i].split(":")[0].substring(4,7);
+                                String symbol = items[i].split(":")[0].substring(4, 7);
 
                                 double value = Double.parseDouble(items[i].split(":")[1]);
 
-                                if(symbol.equals("ARS")){
-                                    currencies.add(new Indicator("USD",df_3.format(value)+" ARS"));
-                                    usd_to_ars=value;
-                                }else{
+                                convertionRates.put(symbol,value);
 
-                                    currencies.add(new Indicator(symbol,df_3.format(usd_to_ars/value)+" ARS"));
-                                }
-
+                                buildTable(base);
                             }
-
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } finally {
+
                             currencyListAdapter.notifyDataSetChanged();
                             rootView.findViewById(R.id.loading_currencies).setVisibility(View.GONE);
                             rootView.findViewById(R.id.currency_source).setVisibility(View.VISIBLE);
-
                         }
                     }
 
@@ -194,10 +200,27 @@ public class InformationFragment extends Fragment implements  Constants {
                     }
                 });
         App.getInstance().addToRequestQueue(jsonObjReq, "getIndicators");
-
-
     }
 
+    public void buildTable(String to){
+        currencies.clear();
+        if(to == "USD"){
+            for(String key:convertionRates.keySet()){
+                currencies.add(new Indicator(key,df_3.format(1/convertionRates.get(key))+" "+to));
+            }
+        }else{
+
+            double usd_to_ars = 1/convertionRates.get("ARS");
+            currencies.add(new Indicator("USD", convertionRates.get("ARS")+" ARS"));
+            for(String key:convertionRates.keySet()){
+                double factor = 1/convertionRates.get(key);
+                currencies.add(new Indicator(key, df_3.format(convertionRates.get("ARS") * factor)+" "+to));
+            }
+
+        }
+
+        currencyListAdapter.notifyDataSetChanged();
+    }
 
     public void getIndicators(String currency){
         SharedPreferences preferences = getActivity().getSharedPreferences(INDICATORS_FILE, 0);
